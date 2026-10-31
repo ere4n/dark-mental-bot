@@ -1,0 +1,28 @@
+name: Run Dark Mental Bot
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Public Workflow Repo
+      uses: actions/checkout@v4
+
+    - name: Clone Private Repository Code
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
+      run: |
+        git clone https://x-access-token:${GH_PAT}@github.com/ere4n/asituff.git private_repo
+
+    - name: Run Private Script
+      env:
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      run: |
+        python3 "private_repo/DARK MENTAL ASIF.py"
