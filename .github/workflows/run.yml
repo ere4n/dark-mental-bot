@@ -21,6 +21,11 @@ jobs:
       run: |
         git clone https://x-access-token:${GH_PAT}@github.com/ere4n/asituff.git private_repo
 
+    - name: Install Dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install "python-telegram-bot[all]"
+
     - name: Run Private Script
       env:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
