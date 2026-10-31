@@ -20,8 +20,6 @@ jobs:
         GH_PAT: ${{ secrets.GH_PAT }}
       run: |
         git clone https://x-access-token:${GH_PAT}@github.com/ere4n/asituff.git private_repo
-        echo "=== Files inside private_repo ==="
-        ls -la private_repo
 
     - name: Install Dependencies
       run: |
