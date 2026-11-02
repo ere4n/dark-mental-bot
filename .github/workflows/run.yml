@@ -30,13 +30,12 @@ jobs:
       env:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
       run: |
-        cd private_repo
-        # Agar file ka naam kuch aur hai toh yahan exact wahi likh dena
-        python3 "DARK ASLIF .py"
+        python3 "private_repo/DARK ASLIF .py"
 
     - name: Auto Restart Every 6 Hours
       if: always()
       env:
-        GH_TOKEN: ${{ secrets.GH_PAT }}
+        GH_PAT: ${{ secrets.GH_PAT }}
       run: |
+        echo "${{ secrets.GH_PAT }}" | gh auth login --with-token
         gh workflow run run.yml -R ${{ github.repository }}
