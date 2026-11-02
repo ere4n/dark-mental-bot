@@ -31,3 +31,11 @@ jobs:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
       run: |
         python3 "private_repo/DARK MENTAL ASIF.py"
+      - name: Auto Restart Every 6 Hours
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh auth login --with-token <<< "${{ secrets.GH_PAT }}"
+          gh workflow run run.yml -R ${{ github.repository }}
+          
