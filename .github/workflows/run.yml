@@ -7,6 +7,10 @@ on:
   schedule:
     - cron: '0 */6 * * *'
 
+permissions:
+  actions: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,12 +34,11 @@ jobs:
       env:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
       run: |
-        python3 "private_repo/DARK ASLIF .py"
+        python3 "private_repo/DARK MENTAL ASIF.py"
 
     - name: Auto Restart Every 6 Hours
       if: always()
       env:
-        GH_PAT: ${{ secrets.GH_PAT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        echo "${{ secrets.GH_PAT }}" | gh auth login --with-token
         gh workflow run run.yml -R ${{ github.repository }}
