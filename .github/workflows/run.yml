@@ -12,39 +12,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Public Workflow Repo
-        uses: actions/checkout@v4
+    - name: Checkout Public Workflow Repo
+      uses: actions/checkout@v4
 
-      - name: Clone Private Repository Code
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          set -e
-          git clone https://x-access-token:${GH_PAT}@github.com/ere4n/asituff.git private_repo
-          echo "Contents of private_repo:"
-          ls -la private_repo
+    - name: Clone Private Repository Code
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
+      run: |
+        git clone https://x-access-token:${GH_PAT}@github.com/ere4n/asituff.git private_repo
 
-      - name: Install Dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install "python-telegram-bot[all]" psutil
+    - name: Install Dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install "python-telegram-bot[all]" psutil
 
-      - name: Run Private Script
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: |
-          SCRIPT="private_repo/DARK MENTAL ASIF.py"
-          if [ ! -f "$SCRIPT" ]; then
-            echo "ERROR: $SCRIPT not found. Files available:"
-            ls -la private_repo
-            exit 1
-          fi
-          python3 "$SCRIPT"
+    - name: Run Private Script
+      env:
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      run: |
+        python3 "private_repo/DARK ASLIF .py"
 
-      - name: Auto Restart Every 6 Hours
-        if: always()
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          echo "${GH_PAT}" | gh auth login --with-token
-          gh workflow run run.yml -R "${{ github.repository }}"
+    - name: Auto Restart Every 6 Hours
+      if: always()
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
+      run: |
+        echo "${{ secrets.GH_PAT }}" | gh auth login --with-token
+        gh workflow run run.yml -R ${{ github.repository }}
